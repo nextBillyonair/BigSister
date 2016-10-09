@@ -4,4 +4,5 @@ This project will use OpenCV to count the number of people in the ACM at any one
 
 # Contributors
 William Watson wwatso13@jhu.edu billyonair
+
 Joshan Bajaj jbajaj1@jhu.edu jbajaj
