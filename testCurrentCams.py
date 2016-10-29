@@ -1,14 +1,14 @@
 import cv2
 import numpy as np
-from Camera import WebCamera
+from Camera import URLCamera
 from cvaux import *
 from FaceDetect import FaceDetect
 
 url = "http://polaris.acm.jhu.edu/motion/thread2/lastimage.jpg?time=1474063328843"
 url2 = "http://polaris.acm.jhu.edu/motion/thread1/lastimage.jpg?time=1474064133272"
 
-cam1 = WebCamera(url)
-cam2 = WebCamera(url2, 2)
+cam1 = URLCamera(url)
+cam2 = URLCamera(url2, 2)
 fd = FaceDetect()
 
 try:

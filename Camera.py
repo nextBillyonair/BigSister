@@ -3,7 +3,7 @@ import numpy as np
 import os
 import urllib
 
-class WebCamera:
+class URLCamera:
     """
     Class to retrieve images from a camera posted on the web, i.e. the two web
     cams in the ACM office.
@@ -72,4 +72,40 @@ class WebCamera:
         """
         self.num = newNum
 
+
+class WebCamera:
+    """
+    Class for setting up a web camera. 
+    """
+
+
+    def __init__(self):
+        """
+        Constructor
+        """
+        self.cap = cv2.VideoCapture(0)
+
+
+    def fetch(self):
+        """
+        Fetches a frame from camera.
+        """
+        ret, frame = self.cap.read()
+        return frame
+
+
+    def destroy(self):
+        """
+        Releases a camera from use.
+        """
+        self.cap.release()
+
+
+    def isOpened(self):
+        """
+        Returns if camera is opened.
+        """
+        return self.cap.isOpened()
+
+    
 # END OF FILE
