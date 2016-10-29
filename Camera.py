@@ -2,6 +2,7 @@ import cv2
 import numpy as np
 import os
 import urllib
+import datetime
 
 class URLCamera:
     """
@@ -20,12 +21,15 @@ class URLCamera:
         self.num = camNum
 
         
-    def download(self, filename = "tmp.jpg"):
+    def download(self, filename = None):
         """
         Downloads an image from url camera
         Filename is optional; def: tmp.jpg
         Returns: filename
         """
+        if filename is None:
+            iso_time = datetime.datetime.now().isoformat()
+            filename = "Cam%d-%s.png" % (self.num, iso_time)
         urllib.urlretrieve(self.urlPath, filename)
         return filename
 
@@ -35,7 +39,8 @@ class URLCamera:
         Fetches an image and only an image, i.e gets file, loads to OpenCV array
         and then deletes file, returning img only.
         """
-        filename = "tmp%d.jpg" % self.num
+        iso_time = datetime.datetime.now().isoformat()
+        filename = "Cam%d-%s.png" % (self.num, iso_time)
         urllib.urlretrieve(self.urlPath, filename)
         img = cv2.imread(filename)
         if img is None:
@@ -91,9 +96,25 @@ class WebCamera:
         Fetches a frame from camera.
         """
         ret, frame = self.cap.read()
+        if not ret:
+            print "Could not read from camera."
+            raise Exception
         return frame
 
 
+    def capture(self, filename = None):
+        """
+        Captures and saves an image.
+        Returns the file saved to.
+        """
+        if filename is None:
+            iso_time = datetime.datetime.now().isoformat()
+            filename = "CamWeb-%s.png" % (iso_time)
+        ret, frame = self.cap.read()
+        cv2.imwrite(frame, filename)
+        return filename
+    
+    
     def destroy(self):
         """
         Releases a camera from use.
@@ -107,5 +128,5 @@ class WebCamera:
         """
         return self.cap.isOpened()
 
-    
+
 # END OF FILE
