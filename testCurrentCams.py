@@ -1,7 +1,8 @@
 import cv2
 import numpy as np
 from Camera import URLCamera
-from cvaux import *
+from ImageIO import *
+from Gradients import *
 from FaceDetect import FaceDetect
 
 url = "http://polaris.acm.jhu.edu/motion/thread2/lastimage.jpg?time=1474063328843"
