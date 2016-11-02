@@ -1,6 +1,6 @@
 import cv2
 import numpy as np
-import cvaux
+import ImageIO
 
 class MotionDetect:
     """
@@ -12,7 +12,7 @@ class MotionDetect:
         """
         Constructor
         """
-        self.first_img = cvaux.grayscale(img_in)
+        self.first_img = ImageIO.grayscale(img_in)
 
         
     def detectMotion(self, frame, window = (21, 21), min_area = 1500):
@@ -54,7 +54,7 @@ class MotionDetect:
         """
         Sets the template image used.
         """
-        self.first_img = cvaux.grayscale(frame)
+        self.first_img = ImageIO.grayscale(frame)
 
         
 # END OF FILE

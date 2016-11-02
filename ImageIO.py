@@ -64,3 +64,33 @@ def destroyWindows():
     """
     cv2.destroyAllWindows()
 
+
+def toHSV(img):
+    """
+    Returns a hsv version of img
+    Needs: image
+    Returns: HSV image
+    """
+    if img is None:
+        print "Img is None"
+        raise Exception
+    gray = grayscale(img)
+    res = cv2.applyColorMap(gray, 9)
+    return res
+
+
+def toJET(img):
+    """
+    Returns a jet version of img
+    Params: image
+    Returns: JET image
+    """
+    if img is None:
+        print "Img is None"
+        raise Exception
+    gray = grayscale(img)
+    res = cv2.applyColorMap(gray, 2)
+    return res
+
+
+

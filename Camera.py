@@ -43,6 +43,7 @@ class URLCamera:
         filename = "Cam%d-%s.png" % (self.num, iso_time)
         urllib.urlretrieve(self.urlPath, filename)
         img = cv2.imread(filename)
+        print filename
         if img is None:
             print "File Not Found: %s" % filename
             raise Exception
@@ -84,11 +85,11 @@ class WebCamera:
     """
 
 
-    def __init__(self):
+    def __init__(self, camNum = 0):
         """
         Constructor
         """
-        self.cap = cv2.VideoCapture(0)
+        self.cap = cv2.VideoCapture(camNum)
 
 
     def fetch(self):
