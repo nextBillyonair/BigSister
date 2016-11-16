@@ -2,6 +2,7 @@ import cv2
 import numpy as np
 import ImageIO
 
+
 class MotionDetect:
     """
     Class for Detecting Motion in an image, given a template.
@@ -38,6 +39,19 @@ class MotionDetect:
             rectangles.append(cv2.boundingRect(item))
 
         return rectangles
+
+
+    def isMotion(self, frame):
+        """
+        Method to see if there is motion in a given frame.
+        Takes an image and returns the following:
+        False, -1 if no motion
+        True, rects if motion (returns rectangles to help user avoid duplicate method calls)
+        """
+        rects = self.detectMotion(frame)
+        if len(rects) == 0:
+            return False, -1
+        return True, rects
 
 
     def drawRectangles(self, frame, rect):

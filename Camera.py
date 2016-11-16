@@ -123,6 +123,14 @@ class WebCamera:
         self.cap.release()
 
 
+    def open(self):
+        """
+        Opens the webcam if it is closed.
+        """
+        if self.cap.isOpened():
+            self.cap.open()
+
+
     def isOpened(self):
         """
         Returns if camera is opened.

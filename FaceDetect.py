@@ -15,7 +15,7 @@ class FaceDetect:
     def __init__(self, haarFile = None):
         """
         Constructor Method.
-        Optional haarFile, where def: haarcascades/haarcascade_frontalface_alt.xml
+        Optional haarFile, where def: haarcascades/haarcascade_frontalface_alt.xml -> assumes directory and file exist
         """
         if haarFile is None:
             self.haar = 'haarcascades/haarcascade_frontalface_alt.xml'
@@ -76,7 +76,7 @@ class FaceDetect:
     
     def getHaarFile(self):
         """
-        Returns the haar file being used
+        Returns the name of the haar file being used
         """
         return self.haar
 
