@@ -32,7 +32,7 @@ def adaptiveGaussian(img):
 
 def adaptiveMean(img):
 	"""
-	Method to threshold using a  threshold value that is 
+	Method to threshold using a threshold value that is 
 	the mean of neighbourhood area.
 	"""
 	gray = ImageIO.grayscale(img)
@@ -42,7 +42,60 @@ def adaptiveMean(img):
 
 
 def otsu(img):
+	"""
+	Method to threshold via a OTSU binarization
+	"""
 	gray = ImageIO.grayscale(img)
 	gray = cv2.GaussianBlur(img, (5,5), 0)
 	ret, th = cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY+cv2.THRESH_OTSU)
 	return th
+
+
+def fft_ra(ra):
+	"""
+	Fast Fourier Transform in 1-D.
+	"""
+	f = np.fft.rfft(ra)
+	fshift = np.fft.fftshift(f)
+	return fshift
+
+
+def fft_img(img):
+	"""
+	Fast Fourier Transform in 2-D.
+	"""
+	gray = ImageIO.grayscale(img)
+	f = np.fft.fft2(gray)
+	fshift = np.fft.fftshift(f)
+	return fshift
+
+
+def fshift_to_mag(fs):
+	"""
+	Takes a FFT result and returns the Mag Spec.
+	"""
+	magnitude_spectrum = 20 * np.log(np.abs(fs))
+	return magnitude_spectrum
+
+
+def ifft_ra(ra):
+	"""
+	Inverse Fast Fourier Transform in 2-D.
+	"""
+	f_ishift = np.fft.ifftshift(ra)
+	inv = np.fft.ift(f_ishift)
+	return inv
+
+
+def ifft_img(fshift):
+	"""
+	Inverse Fast Fourier Transform in 2-D.
+	"""
+	f_ishift = np.fft.ifftshift(fshift)
+	img_back = np.fft.ifft2(f_ishift)
+	img_back = np.abs(img_back)
+	return img_back
+
+
+
+

@@ -8,7 +8,10 @@ William Watson wwatso13@jhu.edu billyonair
 Joshan Bajaj jbajaj1@jhu.edu jbajaj
 
 
-# Journal Notes
+# Journal Notes -> Bill
+## Note 9
+Looking into ReactJS for HTML generation. 
+
 ## Note 8
 After going to CV, we talked about Optical Flow, which can track movement in an image. My idea here is for the motion detect to get ROIs from our image, and use the fx fy from opti-flow to see if any reasonable change is occuring. IE filter out noise vs actual objects. This is the current plan until I change my mind. As always, will 
 modularize and keep if it fails.

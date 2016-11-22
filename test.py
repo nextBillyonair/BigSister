@@ -1,34 +1,48 @@
 import cv2 
 import numpy as np
 from Camera import WebCamera
+import OpticalFlow
+import ImageProcessing
+import MotionDetect
+import Rectangle
 
 
-cap = WebCamera(-1)
+def Farneback():
+	cam = WebCamera(0)
 
-frame = cap.fetch()
-prvs = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-hsv = np.zeros_like(frame)
-hsv[...,1] = 255
+	opti = OpticalFlow.Dense_Optical_Flow()
+	md = MotionDetect.MotionDetect()
 
-while (1) :
-	frame2 = cap.fetch()
-	next = cv2.cvtColor(frame2, cv2.COLOR_BGR2GRAY)
+	prev = cam.fetch()
+	xd = np.zeros(200)
+	yd = np.zeros(200)
+	for i in xrange(200):
 
-	flow = cv2.calcOpticalFlowFarneback(prvs, next, None, 0.5, 3, 15, 3, 5, 1.2, 0)
+		curr = cam.fetch()
 
-	mag, ang = cv2.cartToPolar(flow[...,0], flow[...,0])
-	hsv[...,0] = ang*180/np.pi/2
-	hsv[...,2] = cv2.normalize(mag, None, 0, 255, cv2.NORM_MINMAX)
-	bgr = cv2.cvtColor(hsv, cv2.COLOR_HSV2BGR)
+		diff, th, rect = md.intermediate_steps(prev, curr)
+		img = Rectangle.draw_rectangles(curr, rect)
+		cv2.imshow("Diff", diff)
+		cv2.imshow("Th", th)
+		cv2.imshow("Motion", img)
+		# cv2.waitKey(20)
+		if len(rect) > 0:
+			flow = opti.dense_opti_flow(prev, curr)
 
-	cv2.imshow('frame2', bgr)
-	k =  cv2.waitKey(30) & 0xff
-	if k == 27:
-		break
-	elif k == ord('s'):
-		cv2.imwrite('optifb.png', frame2)
-		cv2.imwrite('optihsv.png', bgr)
-	prvs = next
+			x, y = opti.get_fx_fy(flow)
+			mx = np.mean(x)
+			my = np.mean(y)
+			print i, mx, my
+			xd.itemset(i, mx)
+			yd.itemset(i, my)
 
-cap.destroy()
-cv2.destroyAllWindows()
+			cv2.imshow("Ret", opti.draw_flow(curr, flow))
+		else:
+			print i, 0, 0
+		cv2.waitKey(20)
+
+		prev = curr
+
+	cv2.destroyAllWindows()	
+
+Farneback()
