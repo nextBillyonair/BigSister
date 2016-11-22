@@ -9,6 +9,11 @@ Joshan Bajaj jbajaj1@jhu.edu jbajaj
 
 
 # Journal Notes -> Bill
+## Note 10
+Cleaned up the Optical Flow classes. Moved around methods in motion detect. New
+file for rectangle interpretation methods. Combo of motion detect and optical 
+flow is being considered now. In addition, still need to look into reactJS.
+
 ## Note 9
 Looking into ReactJS for HTML generation. 
 
