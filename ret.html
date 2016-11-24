@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title> JHU ACM Office Door Data </title>
+<meta name="description" content="Data retrieved from processing the images from the Office Door Camera">
+
+<script type="text/javascript">
+	
+	function refresh(node)
+	{
+   		var times = 20; // gap in Milli Seconds;
+
+   		(function startRefresh()
+   		{
+      		var address;
+      			if(node.src.indexOf('?')>-1)
+       				address = node.src.split('?')[0];
+      			else 
+       				address = node.src;
+      		node.src = address+"?time="+new Date().getTime();
+
+      		setTimeout(startRefresh,times);
+   		})();
+
+	}
+
+	window.onload = function()
+	{
+  		var img1 = document.getElementById('img1');
+  		refresh(img1);
+  		var img2 = document.getElementById('img2');
+  		refresh(img2);
+  		var img3 = document.getElementById('img3');
+  		refresh(img3);
+  		var img4 = document.getElementById('img4');
+  		refresh(img4);
+  		var img5 = document.getElementById('img5');
+  		refresh(img5);
+  		var img6 = document.getElementById('img6');
+  		refresh(img6);
+  		var img7 = document.getElementById('img7');
+  		refresh(img7);
+	}
+
+
+</script>
+
+<style>
+table.GeneratedTable {
+  width: 100%;
+  background-color: #ffffff;
+  border-collapse: collapse;
+  border-width: 2px;
+  border-color: #ffcc00;
+  border-style: solid;
+  color: #000000;
+}
+
+table.GeneratedTable td, table.GeneratedTable th {
+  border-width: 2px;
+  border-color: #ffcc00;
+  border-style: solid;
+  padding: 3px;
+}
+
+table.GeneratedTable thead {
+  background-color: #ffcc00;
+}
+</style>
+
+
+</head>
+
+<body>
+	
+<h1>
+Images From Camera
+</h1>
+
+<p>
+This page is a convient way to view all the intermitent images used in the tracking application. They are recorded into a table format for convience.
+</p>
+
+<table class="GeneratedTable">
+  <thead>
+    <tr>
+      <th>Original</th>
+      <th>Motion</th>
+      <th>Optical Flow</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><img src="Results/Original.jpg" alt="Original" id="img1"></td>
+      <td><img src="Results/Motion.jpg" alt="Motion Detection" id="img2"></td>
+      <td><img src="Results/OpticalFlow.jpg" alt="Optical Flow" id="img3"></td>
+    </tr>
+  </tbody>
+  
+  <thead>
+    <tr>
+      <th>Absolute Difference</th>
+      <th>Gradient Magnitude</th>
+      <th>Laplacian</th>
+    </tr>
+  </thead>
+  <tbody>
+  	<tr>
+      <td><img src="Results/Difference.jpg" alt="Absolute Difference" id="img4"></td>
+      <td><img src="Results/GradientMag.jpg" alt="Gradient Magnitude" id="img5"></td>
+      <td><img src="Results/Laplacian.jpg" alt="Laplacian" id="img6"></td>
+    </tr>
+  </tbody>
+  <thead>
+    <tr>
+      <th>Threshold</th>
+      <th> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+  	<tr>
+      <td><img src="Results/Threshold.jpg" alt="Threshold of Abs Diff" id="img7"></td>
+      <td> </td>
+      <td> </td>
+    </tr>
+  </tbody>
+    
+   
+</table>
+
+</body>
+
+
+</html>

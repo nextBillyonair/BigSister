@@ -5,10 +5,11 @@ import OpticalFlow
 import ImageProcessing
 import MotionDetect
 import Rectangle
+import Gradients
 
 
 def Farneback():
-	cam = WebCamera(0)
+	cam = WebCamera(1)
 
 	opti = OpticalFlow.Dense_Optical_Flow()
 	md = MotionDetect.MotionDetect()
@@ -22,11 +23,12 @@ def Farneback():
 
 		diff, th, rect = md.intermediate_steps(prev, curr)
 		img = Rectangle.draw_rectangles(curr, rect)
-		cv2.imshow("Diff", diff)
-		cv2.imshow("Th", th)
-		cv2.imshow("Motion", img)
+		# curr
+		# cv2.imshow("Diff", diff)
+		# cv2.imshow("Th", th)
+		# cv2.imshow("Motion", img)
 		# cv2.waitKey(20)
-		if len(rect) > 0:
+		if len(rect) > 0 or i == 0:
 			flow = opti.dense_opti_flow(prev, curr)
 
 			x, y = opti.get_fx_fy(flow)
@@ -36,13 +38,31 @@ def Farneback():
 			xd.itemset(i, mx)
 			yd.itemset(i, my)
 
-			cv2.imshow("Ret", opti.draw_flow(curr, flow))
+			ret = opti.draw_flow(curr, flow)
 		else:
+			# continue
 			print i, 0, 0
-		cv2.waitKey(20)
+		# cv2.waitKey(20)
+
+		grad = Gradients.gradient_magnitude(curr)
+		lap = Gradients.laplacian(curr)
+		cv2.imwrite("Results/Original.jpg", curr)
+		cv2.imwrite("Results/Difference.jpg", diff)
+		cv2.imwrite("Results/Threshold.jpg", th)
+		cv2.imwrite("Results/Motion.jpg", img)
+		cv2.imwrite("Results/OpticalFlow.jpg", ret)
+		cv2.imwrite("Results/GradientMag.jpg", grad)
+		cv2.imwrite("Results/Laplacian.jpg", lap)
+
+
+		# save([curr, diff, th, rect, ret])
 
 		prev = curr
 
 	cv2.destroyAllWindows()	
 
+
+
 Farneback()
+
+
