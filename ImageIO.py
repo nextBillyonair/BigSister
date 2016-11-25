@@ -11,8 +11,8 @@ def normalize(img):
 	255 / max value.
 	"""
 	val = np.amax(img)
-    tmp = np.array(img * 255 / val, dtype=np.uint8)
-    return tmp
+	tmp = np.array(img * 255 / val, dtype=np.uint8)
+	return tmp
 
 
 def absolute(img):
