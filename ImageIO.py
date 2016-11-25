@@ -5,6 +5,23 @@ import numpy as np
 Auxillary Computer Vision Functions Module
 """
 
+def normalize(img):
+	"""
+	Normalizes an image between the range of 0-255 by scaling pixels by
+	255 / max value.
+	"""
+	val = np.amax(img)
+    tmp = np.array(img * 255 / val, dtype=np.uint8)
+    return tmp
+
+
+def absolute(img):
+	"""
+	Absolute value of an image.
+	"""
+	return np.absolute(img)
+
+
 def grayscale(img):
     """
     Returns a grayscale version of img
