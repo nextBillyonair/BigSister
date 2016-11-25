@@ -1,6 +1,11 @@
 import cv2
 import numpy
 
+"""
+Module with methods designed to manipulate Rectangular tuples (x, y, w, h).
+"""
+
+
 def draw_rectangles(frame, rect, color = (0, 255, 0), thickness = 1):
     """
     Draws rectangles onto frame.
