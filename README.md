@@ -9,6 +9,15 @@ Joshan Bajaj jbajaj1@jhu.edu jbajaj
 
 
 # Journal Notes -> Bill
+## Note 11
+Hard coded an HTML file with embedded CSS and JavaScript to allow for 
+a nice GUI to display some results. It also auto refreshes the images via
+the JavaScript embedded code. Next part: fixing motion detect to reduce number of 
+Rectangles produced then slicing that ROI to interpret Flow derivatives. This will allow 
+Is to avoid the motion that is not really moving while also easily tell us where objects are
+Moving to. Now just need to write data to object and create pretty graphs to view in HTML file. 
+Also need to talk to Joshan on Bot integration and what not. 
+Happy Thanksgiving ;)
 ## Note 10
 Cleaned up the Optical Flow classes. Moved around methods in motion detect. New
 file for rectangle interpretation methods. Combo of motion detect and optical 
