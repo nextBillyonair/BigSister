@@ -6,6 +6,8 @@ import ImageProcessing
 import MotionDetect
 import Rectangle
 import Gradients
+import ImageIO
+import SaveLoad
 
 
 def Farneback():
@@ -51,8 +53,8 @@ def Farneback():
 		cv2.imwrite("Results/Threshold.jpg", th)
 		cv2.imwrite("Results/Motion.jpg", img)
 		cv2.imwrite("Results/OpticalFlow.jpg", ret)
-		cv2.imwrite("Results/GradientMag.jpg", grad)
-		cv2.imwrite("Results/Laplacian.jpg", lap)
+		cv2.imwrite("Results/GradientMag.jpg", ImageIO.normalize(grad))
+		cv2.imwrite("Results/Laplacian.jpg", ImageIO.normalize(lap))
 
 
 		# save([curr, diff, th, rect, ret])
