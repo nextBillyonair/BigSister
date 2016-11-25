@@ -45,8 +45,6 @@ def gradient_magnitude(img, ksize=5):
     x = sobelx(gray, ksize=ksize)
     y = sobely(gray, ksize=ksize)
     grad = np.absolute(np.sqrt(abs(x**2) + abs(y**2))/np.sqrt(2))
-    val = np.amax(grad)
-    grad = np.array((grad*255)/val, dtype=np.uint8)
     return grad
 
 
