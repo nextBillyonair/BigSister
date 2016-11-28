@@ -3,7 +3,7 @@ import cv2
 import os
 from picamera import PiCamera
 from picamera.array import PiRGBArray
-from time import sleep()
+from time import sleep
 
 class RPICamera:
     """
