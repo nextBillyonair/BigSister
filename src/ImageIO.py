@@ -5,13 +5,13 @@ import numpy as np
 Auxillary Computer Vision Functions Module
 """
 
-def normalize(img):
+def normalize(img, val_norm = 255):
 	"""
 	Normalizes an image between the range of 0-255 by scaling pixels by
 	255 / max value.
 	"""
 	val = np.amax(img)
-	tmp = np.array(img * 255 / val, dtype=np.uint8)
+	tmp = np.array(img * val_norm / val, dtype=np.uint8)
 	return tmp
 
 

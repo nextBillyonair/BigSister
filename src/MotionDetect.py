@@ -1,7 +1,7 @@
 import cv2
 import numpy as np
 import ImageIO
-import Rectangle
+from Rectangle import *
 
 
 class MotionDetect:
@@ -31,16 +31,29 @@ class MotionDetect:
         thresh = cv2.dilate(thresh, None, iterations = 2)
         cnts = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)[1]
 
-        cnts = sorted(cnts, reverse=True, key=len)
+        cnts = sorted(cnts, reverse=True, key= lambda x : cv2.contourArea(x))
         
         rectangles = list()
-        
+        count = 0
+
+
         for item in cnts:
             if cv2.contourArea(item) < min_area:
-                continue
-
-            rectangles.append(cv2.boundingRect(item))
-
+                break
+            if len(rectangles) == 0:
+            	rectangles.append(Box(cv2.boundingRect(item)))
+            else:   
+            	tmp = Box(cv2.boundingRect(item))  
+            	did_break = False       	
+            	for i in xrange(len(rectangles)):
+            		intersection = rectangles[i].intersection(tmp)
+            		if intersection is not None:
+            			rectangles[i] = Box(rectangles[i].union(tmp), n=rectangles[i].get_id())
+            			did_break = True
+            			break
+            	if not did_break:
+            		rectangles.append(Box(cv2.boundingRect(item), n=len(rectangles)))
+        
         return rectangles
 
 

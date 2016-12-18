@@ -6,58 +6,47 @@ import OpticalFlow
 import ImageProcessing
 import MotionDetect
 import Rectangle
-import Gradients
 import ImageIO
 import SaveLoad
+import Templating
 
 
 def main():
 	cam = WebCamera(1)
 	opti = OpticalFlow.Dense_Optical_Flow()
 	md = MotionDetect.MotionDetect()
-
+	rect_new = []
+	rect_old = []
 	ppl = 0
 	prev = cam.fetch()
 	xd = list()
-	yd = list()
-	# seg = list() # JUST FOR NOW
 
-	for i in xrange(200):
-
+	for i in xrange(50):
+		print i
 		curr = cam.fetch()
 
-		rect = md.detect_motion(prev, curr)
-		img = Rectangle.draw_rectangles(curr, rect)
+		rect_new = md.detect_motion(prev, curr)
+		img = Rectangle.draw_rectangles(curr, rect_new)
 
-		if len(rect) > 0 or i == 0:
+		if len(rect_new) > 0 or i == 0:
 			flow = opti.dense_opti_flow(prev, curr)
 			x, y = opti.get_fx_fy(flow)
-			mx = np.sum(x)
-			my = np.sum(y)
+			matches = Templating.match_rects(rect_new, rect_old)
+			print matches
+			mx = np.mean(x)
 			xd.append(mx)
-			yd.append(my)
 			ret = opti.draw_flow(curr, flow)
 
 		else:
 			if len(xd) != 0:
-				# seg.append({"x":xd, "y": yd})
-				# xd = list()
-				# yd = list()
-
-				# IDEA: Check flow for each rect sep, see
-				# print np.sum(xd)
-				# print xd
-				# datax = sci.gaussian_filter1d(xd, 1)
-
-				# datay = sci.gaussian_filter1d(yd, 0.5)
-				x = np.sum(xd)
+				x = np.mean(xd)
 				print x
 				xd = list()
-				yd = list()
-				if x < -150:
+				# yd = list()
+				if x < -0.2:
 					print "LEFT"
 					ppl -= 1
-				elif x > 150:
+				elif x > 0.2:
 					print "RIGHT"
 					ppl += 1
 				else: 
@@ -65,19 +54,15 @@ def main():
 				x = None
 
 			# DO WORK HERE COUNT!!!!
-
+		rect_old = rect_new
 		cv2.imwrite("../Results/Motion.jpg", img)
 		cv2.imwrite("../Results/OpticalFlow.jpg", ret)
 		prev = curr
 
 	if len(xd) != 0:
-		# seg.append({"x":xd, "y": yd})
-		# xd = list()
-		# yd = list()
 		x = np.sum(xd)
 		print x
 		xd = list()
-		yd = list()
 		if x < -150:
 			print "LEFT"
 			ppl -= 1
@@ -88,15 +73,7 @@ def main():
 			print "NO MOTION"
 		x = None
 
-	
-
-	# for item in seg:
-		# for i in xrange(len(item["x"])):
-			# print i, item["x"][i], item["y"][i]
-		# print "\n"
-
-
 	print ppl
 
-# Update with if main thing
-main()
+if __name__ == '__main__':
+	main()
