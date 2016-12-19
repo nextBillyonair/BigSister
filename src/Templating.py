@@ -65,7 +65,7 @@ def match_rects(rects_1, rects_2):
 		lst.append((i, index))
 	return lst
 
-"""
+
 img = np.zeros((700,700, 3), dtype = np.uint8)
 lst = [(332, 325, 139, 154),(293, 188, 151, 134),(223, 216, 62, 199),(304, 323, 52, 107),(221, 415, 82, 64)]
 for i in xrange(len(lst)):
@@ -97,5 +97,3 @@ cv2.imshow("add", o + n)
 
 cv2.waitKey(0)
 cv2.destroyAllWindows()
-
-"""
