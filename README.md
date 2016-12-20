@@ -138,4 +138,3 @@ made to hijack the feed from the cams. Using urllib, we sucessfully fetched the 
 At first We made objects to hold the cameras so that we could acess them easily.
 Two types exists: URL and Web. URL fetches an image from a stream from a given address.
 Web takes the feed from a pluged in camera and controls the flow of info from it.
-
