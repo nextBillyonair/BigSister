@@ -9,6 +9,8 @@ import Rectangle
 import ImageIO
 import SaveLoad
 import Templating
+import datetime
+import time
 
 
 def main():
@@ -20,15 +22,17 @@ def main():
 	ppl = 0
 	prev = cam.fetch()
 	xd = list()
-
-	for i in xrange(50):
-		print i
+	init_time = time.time()
+	filename = "people.txt"
+	count = 0
+	while True:
+		# print i
 		curr = cam.fetch()
 
 		rect_new = md.detect_motion(prev, curr)
 		img = Rectangle.draw_rectangles(curr, rect_new)
-
-		if len(rect_new) > 0 or i == 0:
+		ts = time.time()
+		if len(rect_new) > 0 or count == 0:
 			flow = opti.dense_opti_flow(prev, curr)
 			x, y = opti.get_fx_fy(flow)
 			matches = Templating.match_rects(rect_new, rect_old)
@@ -55,9 +59,15 @@ def main():
 
 			# DO WORK HERE COUNT!!!!
 		rect_old = rect_new
+		if abs(ts - init_time) >= 600:
+			f = open(filename, 'a')
+			st = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d,%H:%M:%S')
+			f.write("%s|%d\n" % (st, ppl))
+			f.close()
 		cv2.imwrite("../Results/Motion.jpg", img)
 		cv2.imwrite("../Results/OpticalFlow.jpg", ret)
 		prev = curr
+		count = 1
 
 	if len(xd) != 0:
 		x = np.sum(xd)
@@ -71,6 +81,11 @@ def main():
 			ppl += 1
 		else: 
 			print "NO MOTION"
+		
+		f = open(filename, 'a')
+		st = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d,%H:%M:%S')
+		f.write("%s|%d\n" % (st, ppl))
+		f.close()
 		x = None
 
 	print ppl

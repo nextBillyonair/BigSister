@@ -64,36 +64,3 @@ def match_rects(rects_1, rects_2):
 				min_val = v
 		lst.append((i, index))
 	return lst
-
-
-img = np.zeros((700,700, 3), dtype = np.uint8)
-lst = [(332, 325, 139, 154),(293, 188, 151, 134),(223, 216, 62, 199),(304, 323, 52, 107),(221, 415, 82, 64)]
-for i in xrange(len(lst)):
-	lst[i] = Box(lst[i], i)
-n = draw_rectangles(img, lst)
-rectangles = [(304, 323, 167, 156),(293, 188, 151, 134),(221, 216, 82, 263)]
-for i in xrange(len(rectangles)):
-	rectangles[i] = Box(rectangles[i], i)
-o = draw_rectangles(img, rectangles)
-
-m = match_rects(lst, rectangles)
-print m
-l = []
-for i in m:
-	x, y = i
-	p = draw_rectangles(img, [lst[x], rectangles[y]])
-	l.append(p)
-
-for i in xrange(len(l)):
-	cv2.imshow("%d"%i, l[i])
-
-cv2.namedWindow("n", cv2.WINDOW_NORMAL)
-cv2.namedWindow("o", cv2.WINDOW_NORMAL)
-cv2.namedWindow("add", cv2.WINDOW_NORMAL)
-cv2.imshow("n", n)
-cv2.imshow("o", o)
-cv2.imshow("add", o + n)
-
-
-cv2.waitKey(0)
-cv2.destroyAllWindows()
